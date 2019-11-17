@@ -3,12 +3,36 @@ import PlayerStatsCell from './PlayerStatsCell';
 import PlayerDetails from './PlayerDetails';
 
 const HEADERS = require('../config/headers');
+const CONFIG = require('../config/config');
 
 export default class PlayerStatsRow extends React.Component {
-  
+  state = { backgroundColour: "" };
+	
+  componentWillUnmount() {
+    if (this.updateTimer) {
+      clearTimeout(this.updateTimer);
+	  }
+  }
+
+  updateAndNotify = () => {
+    if (this.updateTimer) return;
+    this.setState({ backgroundColour: "text-warning" });
+    this.updateTimer = setTimeout(() => {
+      this.setState({ backgroundColour: "" });
+	    this.updateTimer = null;
+	  }, CONFIG.textChangeTimeout);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.player.stats) !== JSON.stringify(this.props.player.stats)) {
+      this.updateAndNotify();
+    }
+  }
+
   render() {
       
       const cells = [];
+      let headers = [];
       const player = this.props.player;
       const playerDetails = {
         name: player.name,
@@ -18,8 +42,6 @@ export default class PlayerStatsRow extends React.Component {
       };
       const stats = player.stats;
       const headerType = this.props.type;
-
-      let headers = [];
 
       // Set table headers based on the player type submitted to the component
       if (headerType === "OF") {
@@ -40,9 +62,20 @@ export default class PlayerStatsRow extends React.Component {
       
       return (
         <tr>
-          <PlayerDetails player={playerDetails}/>
+          <PlayerDetails player={playerDetails} backgroundColour={this.state.backgroundColour}/>
           {cells}
         </tr>
       );
     }
+  }
+
+
+  function compare(arr1,arr2){
+    arr1.forEach((val, iter) => {
+      if (val !== arr2[iter]) {
+        return false;
+      }
+    });
+
+    return true;
   }

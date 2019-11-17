@@ -1,2 +1,3 @@
-exports.testFixture = "Z4CDysBJr3MZT8Goc";
+exports.testFixture = "gp8hZYYPtM7P6jAco";
 exports.testMode = true;
+exports.textChangeTimeout = 5000;

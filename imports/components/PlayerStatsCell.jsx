@@ -1,5 +1,7 @@
 import React from 'react';
 
+const CONFIG = require('../config/config');
+
 export default class PlayerStatsCell extends React.Component {
   
   constructor(props) {
@@ -24,7 +26,7 @@ export default class PlayerStatsCell extends React.Component {
         });
         
         updateTimer = null;
-      }, 5000);
+      }, CONFIG.textChangeTimeout);
 
     }
   }

@@ -10,7 +10,7 @@ export default class PlayerDetails extends React.Component {
             <React.Fragment>
                 <td className="text-center"><h4>{player.pos}</h4></td>
                 <td>
-                    <div>
+                    <div className={this.props.backgroundColour}>
                         {player.name}
                     </div>
                     <div>
