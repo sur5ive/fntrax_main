@@ -10,7 +10,10 @@
   "dependencies": {
     "@babel/runtime": "^7.3.4",
     "meteor-node-stubs": "^0.4.1",
-    "puppeteer": "^2.0.0"
+    "puppeteer": "^2.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "reactstrap": "^8.1.1"
   },
   "meteor": {
     "mainModule": {

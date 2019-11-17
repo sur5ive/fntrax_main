@@ -3,6 +3,8 @@ import puppeteer from 'puppeteer';
 import loginPage from './actions/login';
 import populateGameWeekData from './actions/populate_gameweek';
 import populateTeamsData from './actions/populate_teams';
+import '../imports/publish/fixtures';
+import '../imports/publish/playerstats';
 
 const CONFIG = require('./config/config');
 
