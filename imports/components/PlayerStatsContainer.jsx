@@ -1,6 +1,7 @@
 import React from 'react';
 import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import Match from './Match';
+import Event from './Event';
 import PlayerStatsTable from './PlayerStatsTable';
 import { PlayerStats, Fixtures } from '../collections';
 import { Container, Row, Col } from "reactstrap";
@@ -32,6 +33,7 @@ export default class PlayerStatsContainer extends TrackerReact(React.Component) 
             return (
                 <div className="content">
                     <Container fluid={true}>
+                        <Event fixture={currentFixture} />
                         <Row>
                             <Col sm="12">
                                 <Match fixture={currentFixture}/>
