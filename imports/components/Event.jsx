@@ -1,28 +1,58 @@
 import React from 'react';
 import NotificationAlert from 'react-notification-alert';
+import { getEventMessage, getUpdates } from '../src/events';
 
 export default class Event extends React.Component {
     
     componentDidUpdate(prevProps) {
-        if (JSON.stringify(prevProps.fixture) !== JSON.stringify(this.props.fixture)) {
-            this.notify("Yo man!");
+        if (JSON.stringify(prevProps.home) !== JSON.stringify(this.props.home)) {
+
+            let prev = prevProps.home;
+            let curr = this.props.home;
+
+            let updates = getUpdates(curr, prev);
+
+            updates.forEach( e => {
+                let options = getEventMessage(e.update);
+                options.place = "bl";
+                options.player = e.player;
+
+                if (options.type !== undefined) {
+                    this.notify(options);
+                }
+            });
+            
+        }
+
+        if (JSON.stringify(prevProps.away) !== JSON.stringify(this.props.away)) {
+            this.notify({
+                place: "br", 
+                type: "warning", 
+                icon: "tim-icons icon-key-25", 
+                message: "Key pass"
+            });
         }
     }
 
-    notify = message => {
+    notify = params => {
+
+
         let options = {
-            place: "bl",
             message: (
                 <div>
-                <div>
-                    {message}
-                </div>
+                    <div>
+                        <span>{params.message} </span>
+                        <span>{params.player}</span>
+                    </div>
                 </div>
             ),
-            type: "success",
-            icon: "tim-icons icon-satisfied",
-            autoDismiss: 5
-        };
+            closeButton: false,
+            autoDismiss: 10,
+            place: params.place,
+            type: params.type,
+            icon: params.icon
+        }
+        
         this.refs.notificationAlert.notificationAlert(options);
     };
 
@@ -34,3 +64,4 @@ export default class Event extends React.Component {
         );
     }
 }
+

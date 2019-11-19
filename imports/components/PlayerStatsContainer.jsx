@@ -25,26 +25,31 @@ export default class PlayerStatsContainer extends TrackerReact(React.Component) 
             const playerStats = PlayerStats.find({}).fetch();
             const currentFixture = Fixtures.findOne({});
             
-            const homeOF = getClubPlayers(currentFixture.homeShort, playerStats, false);
-            const awayOF = getClubPlayers(currentFixture.awayShort, playerStats, false);
-            const homeGK = getClubPlayers(currentFixture.homeShort, playerStats, true);
-            const awayGK = getClubPlayers(currentFixture.awayShort, playerStats, true);
+            const home = {
+                OF: getClubPlayers(currentFixture.homeShort, playerStats, false),
+                GK: getClubPlayers(currentFixture.homeShort, playerStats, true)
+            };
+
+            const away = {
+                OF: getClubPlayers(currentFixture.awayShort, playerStats, false),
+                GK: getClubPlayers(currentFixture.awayShort, playerStats, true)
+            };
 
             return (
                 <div className="content">
                     <Container fluid={true}>
-                        <Event fixture={currentFixture} />
+                        <Event home={home} away={away} />
                         <Row>
                             <Col sm="12">
                                 <Match fixture={currentFixture}/>
                                 <Row>
                                     <Col sm="6">
-                                        <PlayerStatsTable players={homeOF} type={"OF"} />
-                                        <PlayerStatsTable players={homeGK} type={"GK"} />
+                                        <PlayerStatsTable players={home.OF} type={"OF"} />
+                                        <PlayerStatsTable players={home.GK} type={"GK"} />
                                     </Col>
                                     <Col  sm="6">
-                                        <PlayerStatsTable players={awayOF} type={"OF"} />
-                                        <PlayerStatsTable players={awayGK} type={"GK"} />
+                                        <PlayerStatsTable players={away.OF} type={"OF"} />
+                                        <PlayerStatsTable players={away.GK} type={"GK"} />
                                     </Col>
                                 </Row>
                             </Col>
