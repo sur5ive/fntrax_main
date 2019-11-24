@@ -3,7 +3,7 @@ const HEADERS = ["Teams", "Time (EDT)", "Game Info", "TV", 'Results','Time (EST)
 const CLUBS = {
     'LEI': 'Leicester City',
     'SOU': 'Southampton',
-    'AST': 'Aston Villa',
+    'AVL': 'Aston Villa',
     'MCI': 'Manchester City',
     'EVE': 'Everton',
     'BHA': 'Brighton and Hove Albion',
