@@ -21,21 +21,28 @@ export default class Event extends React.Component {
                     this.notify(options);
                 }
             });
-            
+                        
         }
 
         if (JSON.stringify(prevProps.away) !== JSON.stringify(this.props.away)) {
-            this.notify({
-                place: "br", 
-                type: "warning", 
-                icon: "tim-icons icon-key-25", 
-                message: "Key pass"
+            let prev = prevProps.away;
+            let curr = this.props.away;
+
+            let updates = getUpdates(curr, prev);
+
+            updates.forEach( e => {
+                let options = getEventMessage(e.update);
+                options.place = "br";
+                options.player = e.player;
+
+                if (options.type !== undefined) {
+                    this.notify(options);
+                }
             });
         }
     }
 
     notify = params => {
-
 
         let options = {
             message: (

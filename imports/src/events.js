@@ -78,7 +78,7 @@ function getEventMessage(update) {
             options = {
                 type: "warning", 
                 icon: "tim-icons icon-trophy", 
-                message: "Tackle won!"
+                message: "Disposessed!"
             }
             break;
         case "GA":
@@ -204,25 +204,31 @@ function getUpdates(curr, prev) {
     let result = [];
     
     for (let iter = 0; iter < curr.OF.length; iter++) {
-        if (JSON.stringify(curr.OF[iter]) !== JSON.stringify(prev.OF[iter])) {
+        const currPlayer = curr.OF[iter];
+        const prevPlayer = prev.OF.find(obj => obj.id === currPlayer.id);
+        
+        if (JSON.stringify(currPlayer) !== JSON.stringify(prevPlayer)) {
             let obj = {
-                curr: curr.OF[iter],
-                prev: prev.OF[iter]
+                curr: currPlayer,
+                prev: prevPlayer
             }
             result.push(obj);
         }
     };
 
     for (let iter = 0; iter < curr.GK.length; iter++) {
-        if (JSON.stringify(curr.GK[iter]) !== JSON.stringify(prev.GK[iter])) {
+        const currPlayer = curr.GK[iter];
+        const prevPlayer = prev.GK.find(obj => obj.id === currPlayer.id);
+        
+        if (JSON.stringify(currPlayer) !== JSON.stringify(prevPlayer)) {
             let obj = {
-                curr: e,
-                prev: prev.GK[iter]
+                curr: currPlayer,
+                prev: prevPlayer
             }
             result.push(obj);
         }
     };
-
+    
     return getPlayerStatsUpdates(result);
 }
 
