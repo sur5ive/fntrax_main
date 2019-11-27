@@ -135,8 +135,8 @@ function createFixtureObjects(arr) {
             case 1:
                 let team = parseTeamName(arr[i]);
                 
-                fixture.home = team.name;
-                fixture.homeScore = team.score;
+                fixture.away = team.name;
+                fixture.awayScore = team.score;
                 break;
             
             // Check if element contains '@' sign - means the fixture has not been started yet
@@ -145,8 +145,8 @@ function createFixtureObjects(arr) {
                     let team = parseTeamName(arr[i+1]);
 
                     fixture.status = "NS";
-                    fixture.away = team.name;
-                    fixture.awayScore = team.score;
+                    fixture.home = team.name;
+                    fixture.homeScore = team.score;
                     fixture.ts = convertToTimestamp(date, arr[i+2]);
                 } else {
 
@@ -155,8 +155,8 @@ function createFixtureObjects(arr) {
                     let team = parseTeamName(arr[i]);
 
                     fixture.status = "STARTED";
-                    fixture.away = team.name;
-                    fixture.awayScore = team.score;
+                    fixture.home = team.name;
+                    fixture.homeScore = team.score;
                     fixture.ts = convertToTimestamp(date, arr[i+1]);    
                 }
                 break;
