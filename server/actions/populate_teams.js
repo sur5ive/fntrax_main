@@ -1,5 +1,4 @@
 import { updateTeams } from '../db/teams';
-const CONFIG = require('../config/config');
 
 const URL_TEAM = 'https://www.fantrax.com/fantasy/league/fme67lofjyyvq48x/team/roster;';
 const URL_TEAM_RESP = 'https://www.fantrax.com/fxpa/req?leagueId=fme67lofjyyvq48x';
