@@ -1,40 +1,48 @@
 import { updateTeams } from '../db/teams';
 const CONFIG = require('../config/config');
 
-const URL_TEAMS = 'https://www.fantrax.com/fantasy/league/fme67lofjyyvq48x/team/owners';
-const SEL_TABLE = '/html/body/app-root/div/div[1]/div/app-league-team-owners/div/section/div[2]';
+const URL_TEAM = 'https://www.fantrax.com/fantasy/league/fme67lofjyyvq48x/team/roster;';
+const URL_TEAM_RESP = 'https://www.fantrax.com/fxpa/req?leagueId=fme67lofjyyvq48x';
 
 export default async function populateTeamsData(page) {
     console.log("Starting to populate teams data");
-    // Locate the Teams page
-    await page.goto(URL_TEAMS);
-
-    // Select Teams table
-    const element = await page.waitForXPath(SEL_TABLE);
-
-    // Select Teams table text data
-    const text = await page.evaluate(element => element.innerText, element);
     
-    // Construct array from Teams table text data
-    let data = text.split(',');
+    // Locate the league page
+    await page.goto(URL_TEAM);
+
+    // Get fantasyTeams object from league page
+    const fantasyTeams = await getFantasyTeams(page);
     
     let teams = [];
 
-    for (let i = 0; i < CONFIG.nrTeams; i++) {
-        const team = data[i].split('\n');
-        const owner = String(team[4]).split('\t');
+    // Iterate over fantasyTeams array and construct teams
+    for (let i = 0; i < fantasyTeams.length; i++) {
+        const team = fantasyTeams[i];
 
         teams.push({
-            "name": team[3],
-            "abbrev": owner[1],
-            "user": owner[2],
+            "name": team.name,
+            "manager": team.shortName,
+            "logo": team.logoUrl512,
+            "fId": team.id,
             "id": i
-        })
+        });
     }
 
     // Save teams into database
-    console.log("Saving temas info to database");
+    console.log("Saving teams info to database");
     updateTeams(teams);
 
     console.log("Finished populating teams data");
+}
+
+// Function to return response data from the league URL containing an array with all fantasyTeams
+async function getFantasyTeams(page) {
+    return page.waitForResponse(response => response.url() === URL_TEAM_RESP 
+                            && response.status() === 200 
+                            && response._request._postData.includes("getTeamRosterInfo"))
+        .then(response => response.json()
+            .then(res => { 
+                return res.responses[0].data.fantasyTeams;
+            })
+        );
 }
