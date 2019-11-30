@@ -54,13 +54,12 @@ export default async function loginPage(page, counter) {
     } catch (e) {
         console.log("Error logging in: " + e);
         // Close the browser and increase counter of tries
-        browser.close();
         counter ++;
 
         // Check if max tries has been reached, otherwise try to login again
         if (counter <= CONFIG.maxLoginTries) {
             console.log("Trying to login again. Try nr: " + counter);
-            await loginPage(counter);
+            await loginPage(page, counter);
         } else {
             console.log("Maximum number of login tries reached");
             throw new Error('Max login tries reached');
