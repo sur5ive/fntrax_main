@@ -48,11 +48,7 @@ export default async function loginPage(page, counter) {
             }, async (error) => {
                 // If wait for navigation fails, check if login error is present
                 console.log("Waiting for response for login page failed");
-                console.log(error);
-                await page.waitForXPath(SEL_LOGIN_ERROR).then(async (result) => { 
-                    console.log("Login failed: Invalid username/password.");
-                    throw new Error('Login failed') 
-                });
+                throw new Error('Login failed') 
             })
         ]);
     } catch (e) {
