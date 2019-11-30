@@ -56,26 +56,27 @@ async function enterLoginDetails(page) {
         await page.keyboard.type(CREDS.password);
     console.log("Username/Password entered");
     
-    await Promise.all([page.keyboard.press('Enter'), 
-        page.waitForNavigation({ waitUntil: 'networkidle0' }).then(async () => {
-            //Check page title of the loaded page
-            await page.title().then(async result => {
-                console.log("Page finished loading. Title: " + result);
-                // Check if logged in page is opened
-                if (result === LOGIN_TITLE) {
-                    // End login flow and return the resulting page object
-                    console.log("Fantrax user logged in");
-                } else {
-                    // Throw error about incorrect page title
-                    throw new Error('Incorrect login page');
-                }
-            });
-        }, async (error) => {
-            // If wait for navigation fails, check if login error is present
-            console.log("Waiting for response for login page failed");
-            throw new Error('Login failed') 
-        })
-    ]);
+    await Promise.all([
+        page.waitForNavigation(),
+        page.keyboard.press('Enter')
+    ]).then(async () => {
+        //Check page title of the loaded page
+        await page.title().then(async result => {
+            console.log("Page finished loading. Title: " + result);
+            // Check if logged in page is opened
+            if (result === LOGIN_TITLE) {
+                // End login flow and return the resulting page object
+                console.log("Fantrax user logged in");
+            } else {
+                // Throw error about incorrect page title
+                throw new Error('Incorrect login page');
+            }
+        });
+    }, async () => {
+        // If wait for navigation fails, check if login error is present
+        console.log("Waiting for response for login page failed");
+        throw new Error('Login failed') 
+    });
 
     return page;
 }
