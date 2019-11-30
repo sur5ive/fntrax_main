@@ -33,9 +33,10 @@ export default async function loginPage(page, counter) {
         console.log("Username/Password entered");
         
         // Wait for the page to finish loading
-        await page.waitForNavigation().then(async () => {
+        await page.waitForNavigation({ waitUntil: 'networkidle0' }).then(async () => {
             //Check page title of the loaded page
             await page.title().then(async result => {
+                console.log("Page finished loading. Title: " + result);
                 // Check if logged in page is opened
                 if (result === LOGIN_TITLE) {
                     // End login flow and return the resulting page object
