@@ -46,6 +46,9 @@ export default async function loginPage(page, counter) {
 }
 
 async function enterLoginDetails(page) {
+    // Open Fantrax login page
+    await page.goto(URL_MAIN);
+    console.log("Fantrax login page opened");
     // Enter login details
     await page.waitForXPath(SEL_USERNAME).then((result) => result.click());
     await page.keyboard.type(CREDS.username);
