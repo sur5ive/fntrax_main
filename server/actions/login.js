@@ -29,11 +29,10 @@ export default async function loginPage(page, counter) {
         await page.keyboard.type(CREDS.username);
         await page.waitForXPath(SEL_PASSWORD).then((result) => result.click());
         await page.keyboard.type(CREDS.password);
-        await page.keyboard.press('Enter');
         console.log("Username/Password entered");
         
-        // Wait for the page to finish loading
-        await page.waitForNavigation({ waitUntil: 'networkidle0' }).then(async () => {
+        await Promise.all([page.keyboard.press('Enter'), 
+            page.waitForNavigation({ waitUntil: 'networkidle0' }).then(async () => {
             //Check page title of the loaded page
             await page.title().then(async result => {
                 console.log("Page finished loading. Title: " + result);
@@ -52,7 +51,7 @@ export default async function loginPage(page, counter) {
                 console.log("Login failed: Invalid username/password.");
                 throw new Error('Login failed') 
             });
-        });
+        })]);
     } catch (e) {
         console.log("Error logging in: " + e);
         // Close the browser and increase counter of tries
