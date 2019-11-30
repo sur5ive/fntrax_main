@@ -9,7 +9,8 @@ Meteor.publish("currentfixture", function () {
     // Get today's date
     date = new Date();
     // Subtract 2 hours from the date
-    date.setUTCHours(date.getUTCHours() -2);
+    date.setUTCHours(date.getUTCHours() + Meteor.settings.public.hoursOffset);
+    console.log("Hours offset: " + Meteor.settings.public.hoursOffset);
 
     let subHandle = Fixtures.find({ts: { $gte : date}}).observeChanges({
         added: function(id, fields) {
