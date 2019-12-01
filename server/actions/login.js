@@ -2,7 +2,7 @@ const CREDS = require('../config/creds');
 const CONFIG = require('../config/config');
 
 // DOM element selectors
-const URL_MAIN = 'https://www.fantrax.com/login';
+const URL_MAIN = 'https://www.fantrax.com/fantasy/league/fme67lofjyyvq48x/team/roster';
 const LOGIN_TITLE = 'Fantrax - The Home of Fantasy Sports';
 const SEL_COOKIE= '/html/body/app-root/div/layout-overlay/overlay-toasts/toast/section/div[1]/button[3]';
 const SEL_USERNAME = '//*[@id="mat-input-0"]';
@@ -53,12 +53,17 @@ async function enterLoginDetails(page) {
     await page.waitForXPath(SEL_USERNAME).then((result) => result.click());
     await page.keyboard.type(CREDS.username);
     await page.waitForXPath(SEL_PASSWORD).then((result) => result.click());
-        await page.keyboard.type(CREDS.password);
+    await page.keyboard.type(CREDS.password);
+    await page.keyboard.press('Enter')
     console.log("Username/Password entered");
-    
+
+    const cookies = await page.cookies()
+
+    console.log(cookies);
+
     await Promise.all([
         page.waitForNavigation(),
-        page.keyboard.press('Enter')
+        
     ]).then(async () => {
         //Check page title of the loaded page
         await page.title().then(async result => {
