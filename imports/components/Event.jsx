@@ -48,8 +48,7 @@ export default class Event extends React.Component {
             message: (
                 <div>
                     <div>
-                        <h4>{params.message} </h4>
-                        <h4>{params.player}</h4>
+                        <h3>{params.message} {params.player}</h3>
                     </div>
                 </div>
             ),
