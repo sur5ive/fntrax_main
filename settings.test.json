@@ -1,7 +1,6 @@
 {
 	"public" : {
-		"hoursOffset": 0,
-		"gameWeek": 15
+		"hoursOffset": -1
 	},
 	"private": {
     }
