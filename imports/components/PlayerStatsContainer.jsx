@@ -40,14 +40,14 @@ export default class PlayerStatsContainer extends TrackerReact(React.Component) 
                     <Container fluid={true}>
                         <Event home={home} away={away} />
                         <Row>
-                            <Col sm="12">
+                            <Col>
                                 <Match fixture={currentFixture}/>
                                 <Row>
-                                    <Col sm="6">
+                                    <Col xl="6">
                                         <PlayerStatsTable players={home.OF} type={"OF"} />
                                         <PlayerStatsTable players={home.GK} type={"GK"} />
                                     </Col>
-                                    <Col  sm="6">
+                                    <Col xl="6">
                                         <PlayerStatsTable players={away.OF} type={"OF"} />
                                         <PlayerStatsTable players={away.GK} type={"GK"} />
                                     </Col>
