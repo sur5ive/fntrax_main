@@ -35,7 +35,7 @@ export default class PlayerStatsCell extends React.Component {
       const data = this.props.data;
       
       return (
-        <td className="text-center"><h4 className={this.state.textClass} >{data}</h4></td>
+        <td className="text-center"><h3 className={this.state.textClass} >{data}</h3></td>
       );
     }
   }

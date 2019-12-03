@@ -8,10 +8,10 @@ export default class PlayerDetails extends React.Component {
 
         return (
             <React.Fragment>
-                <td className="text-center"><h4>{player.pos}</h4></td>
+                <td className="text-center"><span>{player.pos}</span></td>
                 <td>
                     <div className={this.props.backgroundColour}>
-                        {player.name}
+                        <h4>{player.name}</h4>
                     </div>
                     <div>
                         <h6 className="text-muted"><small>{player.team.name}</small></h6>
