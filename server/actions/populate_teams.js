@@ -41,6 +41,7 @@ async function getFantasyTeams(page) {
                             && response._request._postData.includes("getTeamRosterInfo"))
         .then(response => response.json()
             .then(res => { 
+                // "gameweeks": res.responses[0].data.displayedLists.periodList
                 return res.responses[0].data.fantasyTeams;
             })
         );
