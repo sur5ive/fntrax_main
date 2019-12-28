@@ -22,7 +22,10 @@ async function run() {
         width: 1920,
         height: 1080
     },
-    args: [`--window-size=1920,1080`] // set browser size
+    args: [
+      `--window-size=1920,1080`,  // set browser size
+      '--disable-gl-drawing-for-tests' // improve performance
+    ] 
   });
   console.log("Browser created");
 
